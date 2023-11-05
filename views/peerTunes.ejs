@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PeerTunes</title>
+    <link rel="stylesheet" href="CSS/peerTunes.css">
+</head>
+<body>
+    <h1>Enter a Song URL</h1>
+
+    <form id="linkForm">
+        <label for="linkInput">Enter a URL:</label>
+        <input type="text" id="linkInput" placeholder="https://example.com">
+        <input type="button" value="Add Link" onclick="addLink()">
+    </form>
+
+    <div id="linkList">
+        <h2>Saved Links:</h2>
+        <ul id="links"></ul>
+        <button onclick="emailLinks()">Email Links</button>
+    </div>
+
+    <img src="images/PTLogo.png">
+
+    <script>
+        const linkInput = document.getElementById('linkInput');
+        const linksList = document.getElementById('links');
+        const links = [];
+
+        function addLink() {
+            const linkValue = linkInput.value;
+            if (linkValue.trim() !== '') {
+                links.push(linkValue);
+                const listItem = document.createElement('li');
+                listItem.textContent = linkValue;
+                linksList.appendChild(listItem);
+                linkInput.value = '';
+            }
+        }
+
+        function emailLinks() {
+            if (links.length > 0) {
+                const emailBody = links.join('\n');
+                const emailSubject = 'Music Sharing!';
+
+                const mailtoLink = `mailto:?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+
+                window.location.href = mailtoLink;
+            }
+        }
+    </script>
+</body>
+</html>
